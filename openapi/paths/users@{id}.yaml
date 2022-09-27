@@ -1,33 +1,17 @@
-parameters:
-  - name: pretty_print
-    in: query
-    description: Pretty print response
-    schema:
-      type: boolean
 get:
   tags:
-    - User
-  summary: Get user by user name
+    - Users
+  summary: Get a user by user id.
   description: |
-    Some description of the operation. 
-    You can use `markdown` here.
-  operationId: getUserByName
+    Get a user by user ID..
+  operationId: getUserById
   parameters:
-    - name: username
+    - name: Id
       in: path
-      description: The name that needs to be fetched
+      description: User ID.
       required: true
       schema:
         type: string
-    - name: with_email
-      in: query
-      description: Filter users without email
-      schema:
-        type: boolean
-  security:
-    - main_auth:
-        - 'read:users'
-    - api_key: []
   responses:
     '200':
       description: Success
@@ -44,20 +28,17 @@ get:
       description: User not found
 put:
   tags:
-    - User
-  summary: Updated user
-  description: This can only be done by the logged in user.
+    - Users
+  summary: Update a user
+  description: Update a company user. 
   operationId: updateUser
   parameters:
-    - name: username
+    - name: id
       in: path
-      description: The name that needs to be updated
+      description: User ID.
       required: true
       schema:
         type: string
-  security:
-    - main_auth:
-        - 'write:users'
   responses:
     '200':
       description: OK
@@ -68,9 +49,6 @@ put:
   requestBody:
     content:
       application/json:
-        schema:
-          $ref: ../components/schemas/User.yaml
-      application/xml:
         schema:
           $ref: ../components/schemas/User.yaml
     description: Updated user object
